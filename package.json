@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^7.2.0",
-    "jest": "^27.0.4",
     "sqlite-async": "^1.1.1"
-  }
+  },
+  "devDependencies": {}
 }
