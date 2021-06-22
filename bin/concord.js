@@ -15,4 +15,11 @@ program
     await populate(db, table, pk)
   })
 
+program
+  .command('match <dbPath> <table> <indexColumns>')
+  .action(async (dbPath, table, indexColumns) => {
+    const db = await Database.open(dbPath)
+    await match(db, table, indexColumns.split(','))
+  })
+
 program.parse(process.argv)
