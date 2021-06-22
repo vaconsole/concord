@@ -3,19 +3,19 @@ const fs = require('fs')
 const Database = require('sqlite-async')
 const dbPath = 'test/input/input.db'
 
+let db = null
 beforeEach(async () => {
-  fs.copyFile('test/input/test.db', 'test/input/input.db', (err) => {
-    if (err) throw err
-  })
+  const initSql = fs.readFileSync('test/input/init.sql', 'utf-8')
+  db = await Database.open(':memory:')
+  await db.exec(initSql)
 })
 
 test('basic_init', async () => {
-  const db = await Database.open(dbPath)
   const result = await concord.init(db)
+  await concord.init(db)
 })
 
 test('basic_populate', async () => {
-  const db = await Database.open(dbPath)
   await concord.init(db)
   const output = await concord.populate(db, 'a', 'id')
   const result = await db.all('select * from con_match')
@@ -27,7 +27,6 @@ test('basic_populate', async () => {
 })
 
 test('basic_populate 2', async () => {
-  const db = await Database.open(dbPath)
   await concord.init(db)
   await concord.populate(db, 'a', 'id')
   await concord.populate(db, 'a', 'id')
@@ -40,7 +39,6 @@ test('basic_populate 2', async () => {
 })
 
 test('basic_match', async () => {
-  const db = await Database.open(dbPath)
   await concord.init(db)
   await concord.populate(db, 'a', 'id')
   await concord.populate(db, 'c', 'id')
