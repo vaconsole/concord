@@ -95,16 +95,4 @@ test('basic_match_bug', () => {
   concord.populate(db, 'b', 'title')
   concord.match(db, 'a', ['title', 'ref'])
   const result = db.prepare('select * from concordance_id').all()
-  console.log(result)
-  // expect(result).toEqual([
-  //   { source: 'a', source_id: 'a1', con_id: 'a1' },
-  //   { source: 'a', source_id: 'a2', con_id: 'a2' },
-  //   { source: 'a', source_id: 'a3', con_id: 'a3' },
-  //   { source: 'b', source_id: 'b2', con_id: 'b2' },
-  //   { source: 'b', source_id: 'b3', con_id: 'b3' },
-  //   { source: 'c', source_id: 'c2', con_id: 'c2' },
-  //   { source: 'b', source_id: 'b1', con_id: 'a1' },
-  //   { source: 'b', source_id: 'b1', con_id: 'a2' },
-  //   { source: 'c', source_id: 'c1', con_id: 'a3' },
-  // ])
 })
