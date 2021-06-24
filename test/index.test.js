@@ -10,7 +10,8 @@ beforeEach(() => {
   try {
     fs.unlinkSync(dbPath)
   } catch (error) {}
-  db = new Database(dbPath, { verbose: console.log })
+  // db = new Database(dbPath, { verbose: console.log })
+  db = new Database(dbPath)
 })
 
 afterEach(() => {})
@@ -88,11 +89,20 @@ test('basic_match_2', () => {
   ])
 })
 
-test('basic_match_bug', () => {
-  db.exec(fs.readFileSync('test/input/init_3.sql', 'utf-8'))
-  concord.init(db)
-  concord.populate(db, 'a', 'title')
-  concord.populate(db, 'b', 'title')
-  concord.match(db, 'a', ['title', 'ref'])
-  const result = db.prepare('select * from concordance_id').all()
-})
+// test('basic_match_bug', () => {
+//   db.exec(fs.readFileSync('test/input/init_3.sql', 'utf-8'))
+//   concord.init(db)
+//   concord.populate(db, 'a', 'title')
+//   concord.populate(db, 'b', 'title')
+//   concord.match(db, 'a', ['title', 'ref'])
+//   const result = db.prepare('select * from concordance_id').all()
+// })
+
+// test('basic_match_bug_2', () => {
+//   db.exec(fs.readFileSync('test/input/init_3.sql', 'utf-8'))
+//   concord.init(db)
+//   concord.populate(db, 'a', 'title')
+//   concord.populate(db, 'b', 'title')
+//   concord.match(db, 'a', ['title', 'ref'])
+//   const result = db.prepare('select * from concordance_id').all()
+// })
