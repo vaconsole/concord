@@ -67,16 +67,6 @@ test('basic_match', () => {
   ])
 })
 
-<<<<<<< HEAD
-test('basic_match_2', async () => {
-  await db.exec(fs.readFileSync('test/input/init_2.sql', 'utf-8'))
-  await concord.init(db)
-  await concord.populate(db, 'a', 'id')
-  await concord.populate(db, 'b', 'id')
-  await concord.populate(db, 'c', 'id')
-  await concord.match(db, 'a', ['id', 'ref'])
-  const result = await db.all('select * from concordance_id')
-=======
 test('basic_match_2', () => {
   db.exec(fs.readFileSync('test/input/init_2.sql', 'utf-8'))
   concord.init(db)
@@ -85,7 +75,6 @@ test('basic_match_2', () => {
   concord.populate(db, 'c', 'id')
   concord.match(db, 'a', ['id', 'ref'])
   const result = db.prepare('select * from concordance_id').all()
->>>>>>> c80364efff324af597f20c515670b83c1549a269
   expect(result).toEqual([
     { source: 'a', source_id: 'a1', con_id: 'a1' },
     { source: 'a', source_id: 'a2', con_id: 'a2' },
