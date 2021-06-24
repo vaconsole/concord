@@ -9,6 +9,7 @@
   "bin": {
     "concord": "bin/concord"
   },
+  "repository": "vaconsole/concord",
   "keywords": [],
   "author": "",
   "license": "ISC",

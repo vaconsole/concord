@@ -5,6 +5,12 @@
 
 ## How to use
 
+
+```
+npm install concord -g
+
+```
+
 ➜  concord git:(master) node bin/concord.js --help
 Usage: concord [options] [command]
 
