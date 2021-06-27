@@ -16,6 +16,7 @@
   "dependencies": {
     "better-sqlite3": "^7.4.1",
     "commander": "^7.2.0",
+    "generate-schema": "^2.6.0",
     "i": "^0.3.6",
     "npm": "^7.18.1",
     "sql-escape": "^1.0.1",
