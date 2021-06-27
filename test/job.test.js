@@ -20,18 +20,6 @@ test('basic_init', () => {
   concord.initJob(db)
 })
 
-test('createJob', () => {
-  db.exec(fs.readFileSync('test/input/init_2.sql', 'utf-8'))
-  concord.initJob(db)
-  const job = {
-    status: 'init',
-    description: 'test job',
-    action: 'upsert|replace',
-    sql_instruction: 'select * from a',
-  }
-  concord.createJob(db, job)
-})
-
 test('jsonCreateTable', () => {
   const data = [
     {
@@ -47,4 +35,15 @@ test('jsonCreateTable', () => {
   db.exec(`insert into job_1 (a,b) values ('test',1)`)
   const result = db.prepare('select * from job_1').all()
   expect(result).toEqual([{ a: 'test', b: 1 }])
+})
+
+test('createJob', () => {
+  db.exec(fs.readFileSync('test/input/init_2.sql', 'utf-8'))
+  concord.initJob(db)
+  const job = {
+    description: 'test job',
+    action: 'replace',
+    sql: 'select * from a',
+  }
+  concord.createJob(db, job)
 })
