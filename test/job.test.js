@@ -37,6 +37,25 @@ test('jsonCreateTable', () => {
   expect(result).toEqual([{ a: 'test', b: 1 }])
 })
 
+test('jsonCreateTable rowId', () => {
+  const data = [
+    {
+      a: 'test',
+      rowid: 1,
+    },
+    {
+      b: 1,
+      rowid: 2,
+    },
+  ]
+
+  const SQL = concord.jsonCreateTable('job_1', data, 'rowid')
+  db.exec(SQL)
+  db.exec(`insert into job_1 (a,rowid) values ('test',1)`)
+  const result = db.prepare('select * from job_1').all()
+  expect(result).toEqual([{ a: 'test', rowid: 1, b: null }])
+})
+
 test('insertJsonToTable basic', () => {
   const data = [
     {
@@ -102,8 +121,28 @@ test('submitJob', () => {
   concord.createJob(db, job)
   const data = [
     { rowid: 1, id: 'a1', ref: 'b1' },
-    { rowid: 2, id: 'a2', ref: 'b1' },
-    { rowid: 3, id: 'a3', ref: 'c1' },
+    { rowid: 3, id: 'a2', ref: 'b1' },
+    { rowid: 5, id: 'a3', ref: 'c1' },
   ]
   concord.submitJob(db, 1, data)
+  const result = db.prepare('select * from _job_1_submission').all()
+  expect(result).toEqual(data)
+})
+
+test('acceptJob', () => {
+  db.exec(fs.readFileSync('test/input/init_2.sql', 'utf-8'))
+  concord.initJob(db)
+  const job = {
+    description: 'test job',
+    action: 'replace',
+    sql: 'select * from a',
+  }
+  concord.createJob(db, job)
+  const data = [
+    { rowid: 1, id: 'a1', ref: 'b1' },
+    { rowid: 3, id: 'a2', ref: 'b1' },
+    { rowid: 5, id: 'a3', ref: 'c1' },
+  ]
+  concord.submitJob(db, 1, data)
+  concord.acceptJob(db, 1)
 })
